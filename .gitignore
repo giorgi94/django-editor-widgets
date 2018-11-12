@@ -2,46 +2,10 @@
 *.py[cod]
 *$py.class
 *.sqlite3
-mydb.sqlite3
-*.zip
-*.rdb
 
-vue-ssr-server-bundle.json
+.vscode/
 
-.vscode
-
-redis.conf
-
-.lhistory
-.bash_history
-uwsgi_logs.txt
-
-/media
-
-/static/
-dist/
-/media/
-logs/
-cache/
 env/
 migrations/
 
-envinfo.py
-config.json
-
 .DS_Store
-
-node files
-node_modules/
-node_modules
-npm-debug.log
-bower_components
-
-package-lock.json
-
-hash.txt
-mhash.txt
-
-build/json/
-
-Makefile

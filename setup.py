@@ -9,6 +9,7 @@ setup(
     version='0.1',
     packages=['pyeditor'],
     description='A line of description',
+    include_package_data=True,
     long_description=README,
     author='yourname',
     author_email='yourname@example.com',
