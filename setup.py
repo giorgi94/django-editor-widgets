@@ -15,6 +15,6 @@ setup(
     # url='https://github.com/yourname/django-myapp/',
     license='MIT',
     install_requires=[
-        'Django>=1.11,<=2',
+        'Django>=1.11',
     ]
 )
