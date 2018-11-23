@@ -7,5 +7,6 @@
 
 env/
 migrations/
+example/djangoeditorwidgets
 
 .DS_Store

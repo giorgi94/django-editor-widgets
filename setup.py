@@ -6,14 +6,16 @@ README = open(os.path.join(here, 'README.md')).read()
 
 setup(
     name='django-web-editors',
-    version='0.1',
-    packages=['pyeditor'],
-    description='A line of description',
+    version='0.2',
+    packages=['djangoeditorwidgets'],
+    description='Rich web editor widgets in the Django Admin',
     include_package_data=True,
     long_description=README,
-    author='yourname',
-    author_email='yourname@example.com',
-    # url='https://github.com/yourname/django-myapp/',
+    author='Giorgi Kakulashvili',
+    # author_email='yourname@example.com',
+    url='https://github.com/giorgi94/django-editor-widgets',
+    keywords=['django', 'monaco', 'tinymce'],
+    platforms=['OS Independent'],
     license='MIT',
     install_requires=[
         'Django>=1.11',

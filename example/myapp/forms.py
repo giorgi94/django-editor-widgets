@@ -1,5 +1,5 @@
 from django import forms
-from pyeditor.widgets import TinymceWidget
+from djangoeditorwidgets.widgets import TinymceWidget
 from .models import TextModel
 
 

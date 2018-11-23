@@ -1,5 +1,5 @@
 from django.db import models
-from pyeditor.fields import XMLField, JsonField
+from djangoeditorwidgets.fields import XMLField, JsonField
 
 
 class TextModel(models.Model):
