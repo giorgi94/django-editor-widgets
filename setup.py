@@ -5,7 +5,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.md')).read()
 
 setup(
-    name='django-web-widgets',
+    name='django-editor-widgets',
     version='1.0',
     packages=['djangoeditorwidgets'],
     description='Rich web editor widgets in the Django Admin',
