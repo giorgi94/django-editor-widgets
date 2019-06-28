@@ -1,5 +1,7 @@
 /* globals tinymce */
 
+
+/*
 (function () {
     var selectedImage = null;
 
@@ -93,3 +95,60 @@
     tinymceConfig;
     tinymce.init(tinymceConfig);
 })();
+*/
+
+(function () {
+
+    const tinymceConfig = {
+        selector: 'textarea[tinymce-editor]',
+        height: 500,
+        menubar: true,
+        contextmenu: false,
+        plugins: [
+            'advlist autolink lists link image charmap print preview anchor textcolor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | image',
+        content_css: [
+            './main.css'
+        ],
+        file_picker_types: 'file image media',
+        file_picker_callback: function (callback, value, meta) {
+            browseFiles(value, meta.filetype, function (fileUrl) {
+                callback(fileUrl);
+            });
+        }
+    }
+
+    const browseFiles = (value, filetype, callback) => {
+
+        tinymce.activeEditor.windowManager.openUrl({
+            title: 'Simple URL Dialog Demo',
+            url: window.__MEDIA_MANAGER_URL__ || '/',
+            buttons: [{
+                    type: 'custom',
+                    name: 'action',
+                    text: 'Submit',
+                    primary: true,
+                },
+                {
+                    type: 'cancel',
+                    name: 'cancel',
+                    text: 'Close Dialog'
+                }
+            ],
+            onAction: function (instance, trigger) {
+                // do something
+                editor.windowManager.alert('onAction is running.You can code your own onAction handler within the plugin.');
+
+                // close the dialog
+                instance.close();
+            },
+            width: 600,
+            height: 300
+        });
+    }
+
+    tinymce.init(tinymceConfig);
+})()
