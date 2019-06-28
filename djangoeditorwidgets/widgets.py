@@ -9,6 +9,42 @@ from django.contrib.admin.widgets import AdminTextareaWidget
 from django.utils.translation import ugettext_lazy as _
 
 
+class TinymceWidget(forms.Textarea):
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        attrs = context['widget']['attrs']
+        attrs.update({
+            'tinymce-editor': True,
+        })
+        return context
+
+    class Media:
+        staticfiles = settings.WEB_EDITOR_STATICFILES['tinymce']
+        js = staticfiles['js']
+        css = staticfiles['css']
+
+
+class MonacoEditorWidget(forms.Textarea):
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        attrs = {
+            'monaco-editor': 'true',
+            'data-language': 'html',
+            'data-wordwrap': 'off',
+            'data-minimap': 'false'
+        }
+        attrs.update(context['widget']['attrs'])
+        context['widget']['attrs'] = attrs
+        return context
+
+    class Media:
+        staticfiles = settings.WEB_EDITOR_STATICFILES['monaco']
+        js = staticfiles['js']
+        css = staticfiles['css']
+
+
 class XMLWidget(AdminTextareaWidget):
 
     def get_context(self, name, value, attrs):
@@ -30,8 +66,9 @@ class XMLWidget(AdminTextareaWidget):
         return xmltree.tostring(value, encoding='utf8', method='xml').decode()
 
     class Media:
-        js = settings.MONACO_EDITOR_STATIC['js']
-        css = settings.MONACO_EDITOR_STATIC['css']
+        staticfiles = settings.WEB_EDITOR_STATICFILES['monaco']
+        js = staticfiles['js']
+        css = staticfiles['css']
 
 
 class JSONWidget(AdminTextareaWidget):
@@ -55,44 +92,6 @@ class JSONWidget(AdminTextareaWidget):
         return json.dumps(value, indent=4, ensure_ascii=False, sort_keys=True)
 
     class Media:
-        js = settings.MONACO_EDITOR_STATIC['js']
-        css = settings.MONACO_EDITOR_STATIC['css']
-
-
-class TinymceWidget(forms.Textarea):
-
-    def get_context(self, name, value, attrs):
-        context = super().get_context(name, value, attrs)
-        attrs = context['widget']['attrs']
-        attrs.update({
-            'tinymce-editor': True,
-        })
-        return context
-
-    class Media:
-        js = settings.TINYMCE_EDITOR_STATIC['js']
-        css = settings.TINYMCE_EDITOR_STATIC['css']
-
-
-class MonacoEditorWidget(forms.Textarea):
-
-    def get_context(self, name, value, attrs):
-        context = super().get_context(name, value, attrs)
-        attrs = {
-            'monaco-editor': 'true',
-            'data-language': 'html',
-            'data-wordwrap': 'off',
-            'data-minimap': 'false'
-        }
-        attrs.update(context['widget']['attrs'])
-        context['widget']['attrs'] = attrs
-        return context
-
-    class Media:
-        js = (
-            '/static/monaco/loader.js',
-            '/static/monaco/monaco.config.js',
-        )
-        css = {
-            'screen': ("/static/monaco/monaco.custom.css", )
-        }
+        staticfiles = settings.WEB_EDITOR_STATICFILES['monaco']
+        js = staticfiles['js']
+        css = staticfiles['css']
