@@ -8,5 +8,7 @@
 env/
 migrations/
 example/djangoeditorwidgets
+media/
 
 .DS_Store
+

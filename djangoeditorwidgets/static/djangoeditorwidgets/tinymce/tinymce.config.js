@@ -97,52 +97,126 @@
 })();
 */
 
-(function () {
+(function (options) {
 
-    const tinymceConfig = {
+    if (!options) {
+        options = {};
+    }
+
+    options = {
+        media_manager_url: null,
+        content_css: [],
+        images_upload_url: '/media/',
+        ...options
+    }
+
+
+    const media_manager_url = options.media_manager_url;
+
+
+    let config = {
         selector: 'textarea[tinymce-editor]',
         height: 500,
+        paste_as_text: true,
+        force_p_newlines: true,
+        invalid_elements: 'br',
         menubar: true,
         contextmenu: false,
+        fontsize_width: 30,
+        content_css: options.content_css,
         plugins: [
-            'advlist autolink lists link image charmap print preview anchor textcolor',
-            'searchreplace visualblocks code fullscreen',
-            'insertdatetime media table paste code help wordcount'
+            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
+            'print', 'preview', 'anchor', 'searchreplace', 'visualblocks',
+            'code', 'fullscreen', 'imagetools',
+            'codesample', 'pagebreak', 'insertdatetime',
+            'media', 'table', 'paste', 'code', 'help', 'wordcount',
         ],
-        toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | image',
-        content_css: [
-            './main.css'
-        ],
-        file_picker_types: 'file image media',
-        file_picker_callback: function (callback, value, meta) {
-            browseFiles(value, meta.filetype, function (fileUrl) {
-                callback(fileUrl);
+        toolbar: `
+            insertfile undo redo | styleselect | fontsizeselect |  forecolor backcolor
+            | bold italic underline | alignleft aligncenter alignright alignjustify
+            | bullist numlist outdent indent
+            | codesample link | media image browse | fullscreen | pagebreak`,
+        setup(editor) {
+
+            editor.ui.registry.addButton('browse', {
+                title: 'Insert files',
+                icon: 'browse',
+                onAction: () => alert('Button clicked!')
             });
+
+
+            editor.on('SaveContent', function (event) {
+                alert('content save')
+                event.content = event.content
+                    .replace(/&nbsp;/g, ' ').replace(/\s{2,}/g, ' ');
+                return event.content;
+            });
+        },
+    }
+
+    config = {
+        ...config,
+        image_caption: true,
+        relative_urls: false,
+        images_upload_url: options.images_upload_url,
+        images_upload_handler(blobInfo, success, failure) {
+            imageUploadHandler(blobInfo, success, failure)
+        },
+    }
+
+
+    if (media_manager_url) {
+        config = {
+            ...config,
+            file_picker_types: 'file image media',
+            file_picker_callback(callback, value, meta) {
+                browseFiles(value, meta.filetype, (fileUrl) => callback(fileUrl));
+            }
         }
+    }
+
+    const imageUploadHandler = (blobInfo, success, failure) => {
+
+
+        /*
+        var xhr, formData;
+
+        xhr = new XMLHttpRequest();
+        xhr.withCredentials = false;
+        xhr.open('POST', 'postAcceptor.php');
+
+        xhr.onload = function () {
+            var json;
+
+            if (xhr.status != 200) {
+                failure('HTTP Error: ' + xhr.status);
+                return;
+            }
+
+            json = JSON.parse(xhr.responseText);
+
+            if (!json || typeof json.location != 'string') {
+                failure('Invalid JSON: ' + xhr.responseText);
+                return;
+            }
+
+            success(json.location);
+        };
+
+        formData = new FormData();
+        formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+        xhr.send(formData);
+        */
     }
 
     const browseFiles = (value, filetype, callback) => {
 
         tinymce.activeEditor.windowManager.openUrl({
-            title: 'Simple URL Dialog Demo',
-            url: window.__MEDIA_MANAGER_URL__ || '/',
-            buttons: [{
-                    type: 'custom',
-                    name: 'action',
-                    text: 'Submit',
-                    primary: true,
-                },
-                {
-                    type: 'cancel',
-                    name: 'cancel',
-                    text: 'Close Dialog'
-                }
-            ],
-            onAction: function (instance, trigger) {
-                // do something
-                editor.windowManager.alert('onAction is running.You can code your own onAction handler within the plugin.');
-
-                // close the dialog
+            title: 'Media Manager',
+            url: media_manager_url || '/',
+            buttons: [],
+            onAction(instance, trigger) {
                 instance.close();
             },
             width: 600,
@@ -150,5 +224,5 @@
         });
     }
 
-    tinymce.init(tinymceConfig);
-})()
+    tinymce.init(config);
+})(window.tinymceOptions)
