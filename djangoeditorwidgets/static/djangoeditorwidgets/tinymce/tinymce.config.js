@@ -138,15 +138,17 @@
             | codesample link | media image browse | fullscreen | pagebreak`,
         setup(editor) {
 
-            editor.ui.registry.addButton('browse', {
-                title: 'Insert files',
-                icon: 'browse',
-                onAction: () => alert('Button clicked!')
-            });
+            if (media_manager_url) {
+                editor.ui.registry.addButton('browse', {
+                    title: 'Insert files',
+                    icon: 'browse',
+                    onAction: () => alert('Button clicked!')
+                });
+            }
+
 
 
             editor.on('SaveContent', function (event) {
-                alert('content save')
                 event.content = event.content
                     .replace(/&nbsp;/g, ' ').replace(/\s{2,}/g, ' ');
                 return event.content;
@@ -177,6 +179,7 @@
 
     const imageUploadHandler = (blobInfo, success, failure) => {
 
+        console.log(blobInfo, success, failure)
 
         /*
         var xhr, formData;
