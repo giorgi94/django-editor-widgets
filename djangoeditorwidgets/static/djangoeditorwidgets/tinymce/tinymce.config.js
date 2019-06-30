@@ -97,17 +97,10 @@
 })();
 */
 
-(function (options) {
+const tinymceConfig = (options) => {
 
     if (!options) {
         options = {};
-    }
-
-    options = {
-        media_manager_url: null,
-        content_css: [],
-        images_upload_url: '/media/',
-        ...options
     }
 
 
@@ -123,7 +116,7 @@
         menubar: true,
         contextmenu: false,
         fontsize_width: 30,
-        content_css: options.content_css,
+        content_css: [],
         plugins: [
             'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
             'print', 'preview', 'anchor', 'searchreplace', 'visualblocks',
@@ -135,7 +128,7 @@
             insertfile undo redo | styleselect | fontsizeselect |  forecolor backcolor
             | bold italic underline | alignleft aligncenter alignright alignjustify
             | bullist numlist outdent indent
-            | codesample link | media image browse | fullscreen | pagebreak`,
+            | link media image browse | pagebreak codesample | fullscreen`,
         setup(editor) {
 
             if (media_manager_url) {
@@ -160,10 +153,10 @@
         ...config,
         image_caption: true,
         relative_urls: false,
-        images_upload_url: options.images_upload_url,
+        images_upload_url: '/media/',
         images_upload_handler(blobInfo, success, failure) {
             imageUploadHandler(blobInfo, success, failure)
-        },
+        }
     }
 
 
@@ -227,5 +220,8 @@
         });
     }
 
-    tinymce.init(config);
-})(window.tinymceOptions)
+    return {
+        ...config,
+        ...options
+    };
+}

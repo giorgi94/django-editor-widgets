@@ -12,6 +12,7 @@ WEB_EDITOR_STATICFILES = {
         'js': (
             '/static/tinymce/tinymce.min.js',
             '/static/djangoeditorwidgets/tinymce/tinymce.config.js',
+            '/static/djangoeditorwidgets/tinymce/tinymce.init.js',
         ),
         'css': {
             'screen': ("/static/djangoeditorwidgets/tinymce/tinymce.custom.css", )
