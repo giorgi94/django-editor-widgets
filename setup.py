@@ -6,7 +6,7 @@ README = open(os.path.join(here, 'README.md')).read()
 
 setup(
     name='django-editor-widgets',
-    version='1.0',
+    version='2.0',
     packages=['djangoeditorwidgets'],
     description='Rich web editor widgets in the Django Admin',
     include_package_data=True,
@@ -19,5 +19,6 @@ setup(
     license='MIT',
     install_requires=[
         'Django>=2.0',
+        'Pillow>=5.3.0'
     ]
 )

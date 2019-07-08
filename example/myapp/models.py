@@ -1,5 +1,5 @@
 from django.db import models
-from djangoeditorwidgets.fields import XMLField, JsonField
+from djangoeditorwidgets.fields import XMLField
 
 
 class TextModel(models.Model):
@@ -20,7 +20,7 @@ class XMLModel(models.Model):
 
 class JSONModel(models.Model):
     title = models.CharField(max_length=50)
-    text = JsonField()
+    text = models.TextField()
 
     def __str__(self):
         return self.title

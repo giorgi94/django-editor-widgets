@@ -104,6 +104,7 @@ const tinymceConfig = (options) => {
     }
 
 
+    const media_upload_url = options.media_upload_url;
     const media_manager_url = options.media_manager_url;
 
 
@@ -149,13 +150,16 @@ const tinymceConfig = (options) => {
         },
     }
 
-    config = {
-        ...config,
-        image_caption: true,
-        relative_urls: false,
-        images_upload_url: '/media/',
-        images_upload_handler(blobInfo, success, failure) {
-            imageUploadHandler(blobInfo, success, failure)
+
+    if (media_upload_url) {
+        config = {
+            ...config,
+            image_caption: true,
+            relative_urls: false,
+            images_upload_url: '/media/',
+            images_upload_handler(blobInfo, success, failure) {
+                imageUploadHandler(blobInfo, success, failure)
+            }
         }
     }
 
@@ -172,38 +176,37 @@ const tinymceConfig = (options) => {
 
     const imageUploadHandler = (blobInfo, success, failure) => {
 
-        console.log(blobInfo, success, failure)
-
-        /*
-        var xhr, formData;
+        let xhr, formData;
 
         xhr = new XMLHttpRequest();
         xhr.withCredentials = false;
-        xhr.open('POST', 'postAcceptor.php');
+        xhr.open('POST', media_upload_url);
 
         xhr.onload = function () {
-            var json;
+            let json;
 
-            if (xhr.status != 200) {
-                failure('HTTP Error: ' + xhr.status);
-                return;
+            if (xhr.status < 200 || xhr.status >= 300) {
+                console.log(json)
+                return failure('HTTP Error: ' + xhr.status);
             }
 
             json = JSON.parse(xhr.responseText);
 
-            if (!json || typeof json.location != 'string') {
-                failure('Invalid JSON: ' + xhr.responseText);
-                return;
+            if (!json || !json.url || json.error) {
+                console.log(json)
+                return failure('Faild to Upload Image')
             }
 
-            success(json.location);
+            return success(json.url);
         };
 
         formData = new FormData();
+        formData.append('csrfmiddlewaretoken',
+            document.querySelector('input[name="csrfmiddlewaretoken"]').value)
         formData.append('file', blobInfo.blob(), blobInfo.filename());
 
         xhr.send(formData);
-        */
+
     }
 
     const browseFiles = (value, filetype, callback) => {

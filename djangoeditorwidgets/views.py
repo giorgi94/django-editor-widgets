@@ -1,10 +1,12 @@
-import mimetypes
 import datetime as dt
+import io
+import mimetypes
+import os
 
-from django.views.generic import View
-from django.http import JsonResponse
 from django.conf import settings
-
+from django.http import JsonResponse
+from django.views.generic import View
+from PIL import Image
 
 
 def assure_dir_exists(dir_path):
@@ -20,46 +22,33 @@ def guess_type(url):
 
 class FileUploadView(View):
 
-    def parsefile(self, path, name):
-        fullpath = os.path.join(path, name)
-
-        info = {
-            'name': name,
-            'isdir': os.path.isdir(fullpath),
-            'isimg': False,
-            'url': fullpath.replace('%s/' % MEDIA_ROOT, '/'),
-        }
-
-        if not info['isdir']:
-            extensions = [".jpg", ".jpeg", ".jfif", ".png", ".gif", ".svg"]
-
-            if os.path.splitext(fullpath)[1].lower() in extensions:
-                info['isimg'] = True
-
-        return info
-
     def post(self, request, *args, **kwargs):
+        MEDIA_URL = settings.MEDIA_URL
         MEDIA_ROOT = settings.MEDIA_ROOT
 
-        files = request.FILES.getlist('files')
+        file = request.FILES.get('file')
         upload_to = dt.datetime.now().strftime('uploads/%Y/%m-%d')
         assure_dir_exists(os.path.join(MEDIA_ROOT, upload_to))
 
-        for file in files:
-            try:
-                path = os.path.join(MEDIA_ROOT, upload_to, file.name)
-                chunks = list(file.chunks())[0]
-                img = Image.open(io.BytesIO(chunks))
-                img.save(path, optimize=True)
-            except Exception:
-                continue
+        try:
+            path = os.path.join(MEDIA_ROOT, upload_to, file.name)
 
-            # DirName = os.path.dirname(path)
-            # BaseName = os.path.basename(path)
-            # item = self.parsefile(DirName, BaseName)
+            filename, ext = os.path.splitext(path)
+            seconds = str(eval(dt.datetime.now().strftime('3600*%H+60*%M+%S')))
+            seconds = '0' * (5 - len(seconds)) + seconds
+            path = filename + '-' + seconds + ext
 
-        return JsonResponse({
-            # 'url': '/%s' % upload_to,
-            # 'item': item
-            "ok": True
-        })
+            chunks = list(file.chunks())[0]
+
+            img = Image.open(io.BytesIO(chunks))
+            img.save(path, optimize=True)
+
+            return JsonResponse({
+                "url": path.replace(MEDIA_ROOT + '/', MEDIA_URL)
+            })
+
+        except Exception as ex:
+            print(ex)
+            return  JsonResponse({
+                'error': str(ex)
+            })

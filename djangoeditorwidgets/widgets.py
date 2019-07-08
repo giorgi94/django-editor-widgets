@@ -84,13 +84,6 @@ class JSONWidget(AdminTextareaWidget):
         })
         return context
 
-    def format_value(self, value):
-        if value is None:
-            return "{}"
-        if type(value) == str:
-            return value
-        return json.dumps(value, indent=4, ensure_ascii=False, sort_keys=True)
-
     class Media:
         staticfiles = settings.WEB_EDITOR_STATICFILES['monaco']
         js = staticfiles['js']
