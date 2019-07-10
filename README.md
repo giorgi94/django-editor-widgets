@@ -9,7 +9,10 @@ This package provides some custom widgets to use monaco or tinymce editors in dj
 To install the package by `pip` run following command
 
 ```sh
+# From Github (latest updates)
 $ pip install git+https://github.com/giorgi94/django-editor-widgets.git
+# Or
+$ pip install django-editor-widgets
 ```
 
 ## Usage
@@ -21,7 +24,7 @@ To start using the package in your project, you need to open `settings.py` file 
 import os
 
 # sets paths to static files for widgets
-from djangoeditorwidgets.defaults import *
+from djangoeditorwidgets.config import *
 
 
 # Application definition
@@ -34,7 +37,7 @@ INSTALLED_APPS = [
 
 ```
 
-Now we can start using the widgets. To use tinymce we need to override widget in form
+Now we can start using the widgets. To use tinymce we need to change widget in form
 ```python
 # forms.py
 from django import forms
@@ -52,20 +55,13 @@ class TextModelForm(forms.ModelForm):
         }
 ```
 
-The package also provides custom fields, and widgets are already set for them.
+The package also provides custom field, and widget are already set for them.
 
 ```python
 # models.py
 from django.db import models
-from djangoeditorwidgets.fields import XMLField, JsonField
+from djangoeditorwidgets.fields import XMLField
 
-
-class TextModel(models.Model):
-    title = models.CharField(max_length=50)
-    text = models.TextField()
-
-    def __str__(self):
-        return self.title
 
 
 class XMLModel(models.Model):
@@ -75,13 +71,4 @@ class XMLModel(models.Model):
     def __str__(self):
         return self.title
 
-
-class JSONModel(models.Model):
-    title = models.CharField(max_length=50)
-    text = JsonField()
-
-    def __str__(self):
-        return self.title
-
 ```
-You don't need to use this fields and only change widgets in forms, but this fields provide simple validations.
