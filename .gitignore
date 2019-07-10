@@ -2,6 +2,7 @@
 *.py[cod]
 *$py.class
 *.sqlite3
+*.egg-info
 
 .vscode/
 
@@ -13,3 +14,5 @@ media/
 .DS_Store
 
 dist/
+build/
+Makefile

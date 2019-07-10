@@ -11,6 +11,7 @@ setup(
     description='Rich web editor widgets in the Django Admin',
     include_package_data=True,
     long_description=README,
+    long_description_content_type="text/markdown",
     author='Giorgi Kakulashvili',
     # author_email='yourname@example.com',
     url='https://github.com/giorgi94/django-editor-widgets',
