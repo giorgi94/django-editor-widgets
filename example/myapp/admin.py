@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from .models import TextModel, XMLModel, JSONModel
 
-from .forms import TextModelForm, JsonModelForm
+from .forms import TextModelForm, JsonModelForm, XmlModelForm
 
 
 @admin.register(TextModel)
@@ -12,7 +12,7 @@ class TextModelAdmin(admin.ModelAdmin):
 
 @admin.register(XMLModel)
 class XMLModelAdmin(admin.ModelAdmin):
-    pass
+    form = XmlModelForm
 
 
 @admin.register(JSONModel)

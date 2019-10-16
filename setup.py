@@ -6,7 +6,7 @@ README = open(os.path.join(here, 'README.md')).read()
 
 setup(
     name='django-editor-widgets',
-    version='2.0',
+    version='3.0',
     packages=['djangoeditorwidgets'],
     description='Rich web editor widgets in the Django Admin',
     include_package_data=True,

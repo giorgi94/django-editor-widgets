@@ -3,6 +3,8 @@
 
 This package provides some custom widgets to use monaco or tinymce editors in django admin.
 
+**remark**: From version 3.0 fields and extra widgets are removed to make code more flexible. Version with custom fields is in *v_2.0* branch.
+
 
 ## Installation
 
@@ -37,7 +39,11 @@ INSTALLED_APPS = [
 
 ```
 
-Now we can start using the widgets. To use tinymce we need to change widget in form
+### TinyMCE
+
+To use tinymce editor in admin, we need to change default widget in the form with `TinymceWidget`
+
+
 ```python
 # forms.py
 from django import forms
@@ -55,20 +61,47 @@ class TextModelForm(forms.ModelForm):
         }
 ```
 
-The package also provides custom field, and widget are already set for them.
+### Monaco Editor
+
+From version 3.0 is removed custom fields and extra widgets. To use monaco editor, we need to import `MonacoEditorWidget` and customize it
 
 ```python
 # models.py
+import json
 from django.db import models
-from djangoeditorwidgets.fields import XMLField
 
-
-
-class XMLModel(models.Model):
+class JSONModel(models.Model):
     title = models.CharField(max_length=50)
-    text = XMLField()
+    _text = models.TextField()
+
+    @property
+    def text(self):
+        return json.laods(self._text)
+
+    @text.setter
+    def text(self, val):
+        self._text = json.dumps(val, ensure_ascii=False)
 
     def __str__(self):
         return self.title
 
+# forms.py
+from django import forms
+from djangoeditorwidgets.widgets import MonacoEditorWidget
+from .models import JSONModel
+
+
+class JsonModelForm(forms.ModelForm):
+    class Meta:
+        model = JSONModel
+        fields = "__all__"
+        widgets = {
+            "_text": MonacoEditorWidget(
+                attrs={"data-wordwrap": "on", "data-language": "json"}
+            )
+        }
 ```
+
+## Remark
+
+Unlike other django package which are for Rich web editors, this package allows developer to fully use capablities and custom plugins for the web editor, like tinymce or monaco, since configurations doesn't go through django settings.
