@@ -10,7 +10,7 @@ env/
 migrations/
 example/djangoeditorwidgets
 media/
-static/
+example/static/
 
 .DS_Store
 
