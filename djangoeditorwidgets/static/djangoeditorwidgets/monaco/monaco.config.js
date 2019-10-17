@@ -1,5 +1,14 @@
 /* global monaco */
 
+/*
+# Monaco Editor Interface:
+https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.idiffeditorconstructionoptions.html
+
+# Monaco Editor Theme Example:
+https://github.com/microsoft/monaco-editor/blob/master/test/playground.generated/customizing-the-appearence-exposed-colors.html
+*/
+
+
 document.addEventListener('DOMContentLoaded', function () {
     require.config({
         paths: {
@@ -23,7 +32,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 container.style.display = 'none';
                 container.parentElement.appendChild(editorWrapper);
 
+
+                monaco.editor.defineTheme('myTheme', {
+                    base: 'vs',
+                    inherit: true,
+                    rules: [{ background: 'FFFFFF' }],
+                    colors: {
+                        'editor.lineHighlightBackground': '#00A1FF0F'
+                    }
+                });
+                monaco.editor.setTheme('myTheme');
+
                 var editor = monaco.editor.create(document.getElementById(container.id + '--editor'), {
+                    renderWhitespace: true,
                     language: container.dataset.language,
                     wordWrap: container.dataset.wordwrap || 'off',
                     minimap: {
