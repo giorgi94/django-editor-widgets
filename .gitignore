@@ -13,7 +13,13 @@ media/
 example/static/
 
 .DS_Store
+.flake8
 
 dist/
 build/
 Makefile
+
+
+tmp/
+
+*.tmp

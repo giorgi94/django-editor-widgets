@@ -7,7 +7,7 @@ class TextModelForm(forms.ModelForm):
     class Meta:
         model = TextModel
         fields = "__all__"
-        widgets = {"text": TinymceWidget()}
+        widgets = {"text": TinymceWidget(name="default")}
 
 
 class JsonModelForm(forms.ModelForm):
