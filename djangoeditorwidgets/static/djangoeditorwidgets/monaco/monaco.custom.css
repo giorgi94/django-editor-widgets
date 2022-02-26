@@ -1,0 +1,16 @@
+.monaco-editor--conteiner {
+    height: 500px;
+    border: 1px solid grey;
+    transition: 0.2s;
+    margin-left: 170px !important;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+    width: calc(100% - 180px) !important;
+}
+
+@media only screen and (max-width: 782px) {
+    .monaco-editor--conteiner {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+}

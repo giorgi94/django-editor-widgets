@@ -1,0 +1,27 @@
+/*
+.form-row .mce-tinymce {
+    margin-left: 170px !important;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+    width: calc(100% - 180px) !important
+}
+
+.form-row .mce-fullscreen {
+    margin-left: 0 !important;
+    width: 100% !important
+}
+
+@media only screen and (max-width: 782px) {
+    .form-row .mce-tinymce {
+        margin-left: 0 !important;
+        width: 100% !important
+    }
+}
+
+div[aria-label="Font Sizes"] .mce-txt {
+    width: 31px !important;
+}
+
+button[title="Font sizes"] {
+    width: 80px !important;
+} */

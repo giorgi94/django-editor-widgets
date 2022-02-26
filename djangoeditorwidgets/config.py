@@ -1,25 +1,3 @@
-# WEB_EDITOR_STATICFILES = {
-#     'monaco': {
-#         'js': (
-#             '/static/monaco/loader.js',
-#             '/static/djangoeditorwidgets/monaco/monaco.config.js',
-#         ),
-#         'css': {
-#             'screen': ("/static/djangoeditorwidgets/monaco/monaco.custom.css", )
-#         }
-#     },
-#     'tinymce': {
-#         'js': (
-#             '/static/tinymce/tinymce.min.js',
-#             '/static/djangoeditorwidgets/tinymce/tinymce.config.js',
-#             '/static/djangoeditorwidgets/tinymce/tinymce.init.js',
-#         ),
-#         'css': {
-#             'screen': ("/static/djangoeditorwidgets/tinymce/tinymce.custom.css", )
-#         }
-#     }
-# }
-
 WEB_EDITOR_DOWNLOAD = {
     "tinymce": {
         "url": "https://download.tiny.cloud/tinymce/community/tinymce_5.10.3.zip",
@@ -43,5 +21,16 @@ WEB_EDITOR_CONFIG = {
                 "/static/djangoeditorwidgets/tinymce/tinymce.custom.css",
             ]
         },
-    }
+    },
+    "monaco": {
+        "js": [
+            "/static/monaco/loader.js",
+            "/static/djangoeditorwidgets/monaco/monaco.config.js",
+        ],
+        "css": {
+            "all": [
+                "/static/djangoeditorwidgets/monaco/monaco.custom.css",
+            ]
+        },
+    },
 }

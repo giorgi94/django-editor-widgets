@@ -15,9 +15,7 @@ class JsonModelForm(forms.ModelForm):
         model = JSONModel
         fields = "__all__"
         widgets = {
-            "_text": MonacoEditorWidget(
-                attrs={"data-wordwrap": "on", "data-language": "json"}
-            )
+            "_text": MonacoEditorWidget(name="default", language="json", wordwrap=True)
         }
 
 
@@ -26,7 +24,5 @@ class XmlModelForm(forms.ModelForm):
         model = XMLModel
         fields = "__all__"
         widgets = {
-            "_text": MonacoEditorWidget(
-                attrs={"data-wordwrap": "on", "data-language": "xml"}
-            )
+            "_text": MonacoEditorWidget(name="default", language="xml", wordwrap=True)
         }

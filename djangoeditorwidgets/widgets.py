@@ -1,23 +1,19 @@
+import json
+
 from django import forms
 from django.conf import settings
 
 
 class TinymceWidget(forms.Textarea):
     def __init__(self, name="default", attrs={}):
-        super().__init__(attrs)
 
-        self.name = name
+        default_attrs = {
+            "data-tinymce": name,
+        }
 
-    def get_context(self, name, value, attrs):
-        context = super().get_context(
-            name,
-            value,
-            {
-                "data-tinymce": self.name,
-                **attrs,
-            },
-        )
-        return context
+        default_attrs.update(attrs)
+
+        super().__init__(default_attrs)
 
     @property
     def media(self):
@@ -28,19 +24,24 @@ class TinymceWidget(forms.Textarea):
 
 
 class MonacoEditorWidget(forms.Textarea):
-    def get_context(self, name, value, attrs):
-        context = super().get_context(name, value, attrs)
-        attrs = {
-            "monaco-editor": "true",
-            "data-language": "html",
-            "data-wordwrap": "off",
-            "data-minimap": "false",
-        }
-        attrs.update(context["widget"]["attrs"])
-        context["widget"]["attrs"] = attrs
-        return context
+    def __init__(
+        self, name="default", language="html", wordwrap=True, minimap=False, attrs={}
+    ):
 
-    # class Media:
-    #     staticfiles = settings.WEB_EDITOR_STATICFILES['monaco']
-    #     js = staticfiles['js']
-    #     css = staticfiles['css']
+        default_attrs = {
+            "data-monaco": name,
+            "data-language": language,
+            "data-wordwrap": "on" if wordwrap else "off",
+            "data-minimap": "on" if minimap else "off",
+        }
+
+        default_attrs.update(attrs)
+
+        super().__init__(default_attrs)
+
+    @property
+    def media(self):
+
+        config = settings.WEB_EDITOR_CONFIG["monaco"]
+
+        return forms.Media(js=config["js"], css=config["css"])
