@@ -1,5 +1,5 @@
 from pathlib import Path
-from djangoeditorwidgets.config import WEB_EDITOR_CONFIG, WEB_EDITOR_DOWNLOAD
+from djangoeditorwidgets.config import init_web_editor_config
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -122,3 +122,8 @@ STATIC_ROOT = BASE_DIR / "static"
 
 
 STATICFILES_DIRS = [BASE_DIR / "static_cdn"]
+
+
+WEB_EDITOR_DOWNLOAD, WEB_EDITOR_CONFIG = init_web_editor_config(
+    BASE_DIR / "static_cdn", STATIC_URL
+)
