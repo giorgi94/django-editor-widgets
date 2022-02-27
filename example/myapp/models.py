@@ -1,24 +1,17 @@
 from django.db import models
 
-import json
-from xml.etree import ElementTree as xmltree
-
 
 class TextModel(models.Model):
     title = models.CharField(max_length=50)
-    text = models.TextField()
+    text = models.TextField(null=True)
 
     def __str__(self):
         return self.title
 
 
-class XMLModel(models.Model):
+class HTMLModel(models.Model):
     title = models.CharField(max_length=50)
-    _text = models.TextField()
-
-    @property
-    def text(self):
-        return xmltree.fromstring(self._text)
+    text = models.TextField(null=True)
 
     def __str__(self):
         return self.title
@@ -26,15 +19,7 @@ class XMLModel(models.Model):
 
 class JSONModel(models.Model):
     title = models.CharField(max_length=50)
-    _text = models.TextField()
-
-    @property
-    def text(self):
-        return json.laods(self._text)
-
-    @text.setter
-    def text(self, val):
-        self._text = json.dumps(val, ensure_ascii=False)
+    text = models.JSONField(null=True)
 
     def __str__(self):
         return self.title

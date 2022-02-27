@@ -1,5 +1,5 @@
 from os.path import join
-from pathlib import Path, PosixPath
+from pathlib import PosixPath
 
 
 def init_web_editor_config(download_dir: PosixPath, static_url: str):

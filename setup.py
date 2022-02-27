@@ -21,5 +21,5 @@ setup(
     keywords=["django", "monaco", "tinymce"],
     platforms=["OS Independent"],
     license="MIT",
-    install_requires=["Django>=4.0", "Pillow>=9", "requests>=2"],
+    install_requires=["Django>=3.0", "Pillow>=8", "requests>=2"],
 )
