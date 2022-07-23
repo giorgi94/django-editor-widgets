@@ -10,7 +10,7 @@ with open(readme) as fp:
 
 setup(
     name="django-editor-widgets",
-    version="4.0",
+    version="4.1",
     packages=["djangoeditorwidgets"],
     description="Rich web editor widgets in the Django Admin",
     include_package_data=True,
