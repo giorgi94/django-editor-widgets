@@ -106,7 +106,7 @@ WEB_EDITOR_CONFIG = {
 Static files are removed from the package, instead it provides management command to download and extract files to given  location
 
 ```bash
-$ python manage.py download_editpr_scripts
+$ python manage.py download_editor_scripts
 ```
 
 
