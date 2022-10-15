@@ -20,5 +20,5 @@ class DjangoEdirorWidgetsConfig(AppConfig):
 
         if not all((to / ed).is_dir() for ed in editors):
             print("editor: downloading static files...")
-            call_command("download_editpr_scripts")
+            call_command("download_editor_scripts")
             print("editor: done.")
