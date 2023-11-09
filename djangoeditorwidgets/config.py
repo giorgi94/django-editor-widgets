@@ -9,7 +9,7 @@ def init_web_editor_config(download_dir: PosixPath, static_url: str):
     WEB_EDITOR_DOWNLOAD = {
         "to": download_dir,
         "tinymce": {
-            "url": "https://download.tiny.cloud/tinymce/community/tinymce_5.10.3.zip",
+            "url": "https://download.tiny.cloud/tinymce/community/tinymce_6.7.2.zip",
             "target": "tinymce/js/tinymce",
         },
         "monaco": {
