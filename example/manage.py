@@ -3,8 +3,8 @@ import os
 import sys
 from pathlib import Path
 
-
-# sys.path.append(str(Path(__file__).resolve().parent.parent))
+# NOTE: This line is only for this example project
+sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 
 def main():

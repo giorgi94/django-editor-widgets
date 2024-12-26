@@ -2,7 +2,6 @@
     height: 500px;
     border: 1px solid grey;
     transition: 0.2s;
-    margin-left: 170px !important;
     -webkit-transition: 0.2s;
     transition: 0.2s;
     width: calc(100% - 180px) !important;
